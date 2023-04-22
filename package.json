@@ -1,0 +1,44 @@
+{
+  "name": "ton-wrappers",
+  "version": "0.0.3",
+  "description": "TON Wrappers interfaces for contracts",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rm -fr dist && tsc --declaration",
+    "release": "yarn build && yarn release-it --npm.yarn1"
+  },
+  "repository": "git@github.com:OpenProduct/ton-wrappers.git",
+  "author": "Nikita Kuznetsov <nkuz915@gmail.com>",
+  "devDependencies": {
+    "@release-it/keep-a-changelog": "^3.1.0",
+    "@types/node": "^18.15.13",
+    "release-it": "^15.10.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "ton-core": ">=0.49.0",
+    "ton-crypto": ">=3.2.0"
+  },
+  "peerDependencies": {
+    "ton-core": ">=0.49.0",
+    "ton-crypto": ">=3.2.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "release-it": {
+    "github": {
+      "release": true
+    },
+    "plugins": {
+      "@release-it/keep-a-changelog": {
+        "filename": "CHANGELOG.md"
+      }
+    }
+  },
+  "packageManager": "yarn@3.4.1"
+}
