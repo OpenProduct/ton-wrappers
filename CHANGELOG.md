@@ -1,5 +1,11 @@
 # Changelog
 
+## [Unreleased]
+
+Features:
+
+- add TonWhales client with axios adapter fix
+
 ## [0.0.4] - 2023-04-23
 
 Features:
