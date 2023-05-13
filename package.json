@@ -1,6 +1,6 @@
 {
   "name": "ton-wrappers",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "TON Wrappers interfaces for contracts",
   "main": "dist/index.js",
   "files": [
