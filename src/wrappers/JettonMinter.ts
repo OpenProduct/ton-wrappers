@@ -1,8 +1,14 @@
-import { Address, beginCell, Cell, Contract, ContractProvider } from "ton-core";
 import {
+  Address,
+  beginCell,
+  Cell,
+  Contract,
+  ContractProvider,
+} from "@ton/core";
+import {
+  ONCHAIN_CONTENT_PREFIX,
   readOffChainMetadata,
   readOnchainMetadata,
-  ONCHAIN_CONTENT_PREFIX,
 } from "../libs/onchainContent";
 import { requestJson, RequestOptions } from "../libs/request";
 
@@ -23,11 +29,17 @@ export interface JettonMinterData {
   jettonContent: Partial<JettonMinterContent> | null;
 }
 
-const getJettonNameState = async (jettonContentUri: string, options?: RequestOptions) => {
+const getJettonNameState = async (
+  jettonContentUri: string,
+  options?: RequestOptions
+) => {
   let state: Partial<JettonMinterContent> = {};
 
   if (jettonContentUri) {
-    state = await requestJson<Partial<JettonMinterContent>>(jettonContentUri, options);
+    state = await requestJson<Partial<JettonMinterContent>>(
+      jettonContentUri,
+      options
+    );
   }
   if (state.name) {
     state.name = state.name.replace(/\0.*$/g, ""); // remove null bytes
@@ -39,7 +51,10 @@ const getJettonNameState = async (jettonContentUri: string, options?: RequestOpt
   return state;
 };
 
-const getJettonContent = async (jettonContentCell: Cell, options?: RequestOptions) => {
+const getJettonContent = async (
+  jettonContentCell: Cell,
+  options?: RequestOptions
+) => {
   try {
     const contentSlice = jettonContentCell.beginParse();
     const prefix = contentSlice.loadUint(8);
@@ -67,7 +82,10 @@ const getJettonContent = async (jettonContentCell: Cell, options?: RequestOption
       const contentUrl = readOffChainMetadata(contentSlice);
 
       if (contentUrl) {
-        const state = await getJettonNameState(contentUrl.toString("utf8"), options);
+        const state = await getJettonNameState(
+          contentUrl.toString("utf8"),
+          options
+        );
         return state;
       } else {
         throw new Error("Unexpected jetton metadata content prefix");
@@ -79,10 +97,7 @@ const getJettonContent = async (jettonContentCell: Cell, options?: RequestOption
 };
 
 export class JettonMinter implements Contract {
-  constructor(
-    readonly address: Address,
-    readonly options?: RequestOptions
-  ) {}
+  constructor(readonly address: Address, readonly options?: RequestOptions) {}
 
   static createFromAddress(address: Address, options?: RequestOptions) {
     return new JettonMinter(address, options);
@@ -100,7 +115,10 @@ export class JettonMinter implements Contract {
     const jettonContentCell = res.stack.readCell();
     const jettonWalletCode = res.stack.readCell();
 
-    const jettonContent = await getJettonContent(jettonContentCell, this.options);
+    const jettonContent = await getJettonContent(
+      jettonContentCell,
+      this.options
+    );
 
     return {
       totalSupply,

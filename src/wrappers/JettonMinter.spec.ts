@@ -1,6 +1,7 @@
 import { getHttpEndpoint } from "@orbs-network/ton-access";
+import { Address } from "@ton/core";
+import { TonClient } from "@ton/ton";
 import axios from "axios";
-import { Address, TonClient } from "ton";
 import { JettonMinter } from "./JettonMinter";
 
 describe("JettonMinter", () => {
@@ -66,7 +67,7 @@ describe("JettonMinter", () => {
 
     const data = await minter.getJettonData();
 
-    expect(data.jettonContent?.name).toBe("jUSDT");
+    expect(data.jettonContent?.name).toBe("Tether USD");
     expect(data.jettonContent?.decimals).toBe("6");
   });
 
